@@ -22,6 +22,6 @@ def add_post(content):
     db = psycopg2.connect(database=DBNAME)
     c = db.cursor()
     # Almost but not quite.
-    c.execute("insert into posts values ('%s')", (content,))
+    c.execute("insert into posts values ('%s')", ("'", "\'"))
     db.commit()
     db.close()
