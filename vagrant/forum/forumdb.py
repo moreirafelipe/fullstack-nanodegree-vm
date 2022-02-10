@@ -5,6 +5,8 @@ password = 'appaccess'
 host = '34.95.251.220'
 database = 'postgres'
 
+content = "'"
+
 
 def get_posts():
     """Return all posts from the 'database', most recent first."""
@@ -31,7 +33,7 @@ def add_post(content):
     )
 
     c = db.cursor()
-    c.execute("insert into posts values('%s')", ("'",))
+    c.execute("insert into posts values('%s')", (content,))
     c.execute(
         "update posts set content='cheese' where content like 'span'")
     db.commit()
