@@ -1,15 +1,35 @@
-# "Database code" for the DB Forum.
+import psycopg2
 
-import datetime
+user = 'app'
+password = 'appaccess'
+host = '34.95.251.220'
+database = 'postgres'
 
-POSTS = [("This is the first post.", datetime.datetime.now())]
 
 def get_posts():
-  """Return all posts from the 'database', most recent first."""
-  return reversed(POSTS)
+    """Return all posts from the 'database', most recent first."""
+    db = psycopg2.connect(
+        user=user,
+        password=password,
+        host=host,
+        database=database)
+
+    c = db.cursor()
+    c.execute("select content, time from posts order by time desc")
+    db.close()
+    return c.fetchall()
+
 
 def add_post(content):
-  """Add a post to the 'database' with the current timestamp."""
-  POSTS.append((content, datetime.datetime.now()))
+    """Add a post to the 'database' with the current timestamp."""
 
+    db = psycopg2.connect(
+        user=user,
+        password=password,
+        host=host,
+        database=database
+    )
 
+    c = db.cursor()
+    c.execute("insert into posts values('%s')" % content)
+    db.commit()
