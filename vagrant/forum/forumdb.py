@@ -32,7 +32,7 @@ def add_post(content):
     )
 
     c = db.cursor()
-    c.execute(bleach.clean("insert into posts values('%s')"))
+    c.execute(bleach.clean("insert into posts values('%s')" % content))
     c.execute(
         "update posts set content='cheese' where content like 'span'")
     db.commit()
