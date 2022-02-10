@@ -1,11 +1,10 @@
 import psycopg2
+import bleach
 
 user = 'app'
 password = 'appaccess'
 host = '34.95.251.220'
 database = 'postgres'
-
-content = "'"
 
 
 def get_posts():
@@ -33,7 +32,7 @@ def add_post(content):
     )
 
     c = db.cursor()
-    c.execute("insert into posts values('%s')", (content,))
+    c.execute(bleach.clean("insert into posts values('%s')"))
     c.execute(
         "update posts set content='cheese' where content like 'span'")
     db.commit()
