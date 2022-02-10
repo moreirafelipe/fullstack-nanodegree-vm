@@ -16,8 +16,8 @@ def get_posts():
 
     c = db.cursor()
     c.execute("select content, time from posts order by time desc")
-    db.close()
     return c.fetchall()
+    db.close()
 
 
 def add_post(content):
